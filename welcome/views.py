@@ -5,18 +5,16 @@ from django.http import HttpResponse
 
 from . import database
 from .models import PageView
+import datetime
 
 # Create your views here.
-
+def current_datetime(request):
+    now = datetime.datetime.now()
+    html = "<html><body>It is now %s.</body></html>" % now
+    return HttpResponse(html)
+    
 def index(request):
-    hostname = os.getenv('HOSTNAME', 'unknown')
-    PageView.objects.create(hostname=hostname)
-
-    return render(request, 'welcome/index.html', {
-        'hostname': hostname,
-        'database': database.info(),
-        'count': PageView.objects.count()
-    })
+    return current_datetime(request)
 
 def health(request):
     return HttpResponse(PageView.objects.count())
