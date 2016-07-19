@@ -6,6 +6,7 @@ from django.http import HttpResponse
 from . import database
 from .models import PageView
 import datetime
+import requests
 
 # Create your views here.
 def current_datetime(request):
@@ -14,7 +15,8 @@ def current_datetime(request):
     return HttpResponse(html)
     
 def index(request):
-    return current_datetime(request)
+    r = requests.get("http://www.51hlife.com/b2b/welcome.htm")
+    return r.content
 
 def health(request):
     return HttpResponse(PageView.objects.count())
