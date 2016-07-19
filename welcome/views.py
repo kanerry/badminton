@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from . import database
 from .models import PageView
 import datetime
-import requests
+import urllib2
 
 # Create your views here.
 def current_datetime(request):
@@ -15,8 +15,10 @@ def current_datetime(request):
     return HttpResponse(html)
     
 def index(request):
-    r = requests.get("http://www.51hlife.com/b2b/welcome.htm")
-    return r.content
+    url = 'http://www.baidu.com/'
+    response = urllib2.urlopen(url) ##urlopen接受传入参数是string或者是request
+    response_text = response.read()
+    return response_text
 
 def health(request):
     return HttpResponse(PageView.objects.count())
